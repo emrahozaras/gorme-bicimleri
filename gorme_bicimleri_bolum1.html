@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Görme Biçimleri — Bölüm 1 | John Berger</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --cream: #ede8dc;
+    --rust: #8b3a2a;
+    --gold: #c9a84c;
+    --muted: #7a7065;
+    --line: #d4cec4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 60px;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.04) 39px,
+      rgba(255,255,255,0.04) 40px
+    );
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .series-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  header h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .author-line {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.55);
+    margin-bottom: 48px;
+  }
+
+  .chapter-num {
+    display: inline-block;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 600;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,240,232,0.15);
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,240,232,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--rust);
+    border-radius: 2px;
+    transition: width 0.1s linear;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 40px 120px;
+  }
+
+  /* ── PARAGRAPHS ── */
+  p {
+    margin-bottom: 1.6em;
+    font-size: 1.05rem;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 56px 0 48px;
+    color: var(--muted);
+  }
+
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-break span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  /* ── IMAGES ── */
+  figure {
+    margin: 48px -40px;
+    position: relative;
+  }
+
+  figure img {
+    width: 100%;
+    display: block;
+    background: var(--cream);
+  }
+
+  figure.inline {
+    margin: 48px 0;
+  }
+
+  figure.inline img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  figcaption {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 10px 40px 0;
+    line-height: 1.5;
+    font-style: normal;
+  }
+
+  figure.inline figcaption {
+    padding: 10px 0 0;
+  }
+
+  /* ── IMAGE GRID ── */
+  .img-grid {
+    display: grid;
+    gap: 4px;
+    margin: 48px -40px;
+  }
+
+  .img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+
+  .img-grid img {
+    width: 100%;
+    display: block;
+    background: var(--cream);
+  }
+
+  .img-grid figcaption {
+    grid-column: 1 / -1;
+    padding: 10px 40px 0;
+  }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--rust);
+    margin: 40px 0 40px 24px;
+    padding: 4px 0 4px 28px;
+    color: #3a3028;
+  }
+
+  blockquote p {
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  /* ── TABLE ── */
+  .data-figure {
+    margin: 48px 0;
+    text-align: center;
+  }
+
+  .data-figure img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+
+  /* ── OPENING STATEMENT ── */
+  .lede {
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 2.4em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull {
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--rust);
+    text-align: center;
+    margin: 56px -20px;
+    padding: 32px 24px;
+    border-top: 1px solid var(--rust);
+    border-bottom: 1px solid var(--rust);
+    position: relative;
+  }
+
+  /* ── LIST ── */
+  ul.berger-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 32px 0;
+    columns: 2;
+  }
+
+  ul.berger-list li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 56px 24px 48px; }
+    .sticky-nav { padding: 12px 24px; }
+    main { padding: 48px 24px 80px; }
+    figure { margin: 40px -24px; }
+    figcaption { padding: 8px 24px 0; }
+    .img-grid { margin: 40px -24px; }
+    .img-grid figcaption { padding: 8px 24px 0; }
+    ul.berger-list { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="series-label">Görme Biçimleri · John Berger</span>
+    <h1>Görmek, sözcüklerden önce gelir</h1>
+    <div class="author-line">Çev. Yurdanur Salman · Metis Yayınları</div>
+    <span class="chapter-num">1</span>
+  </div>
+</header>
+
+<nav class="sticky-nav">
+  <span class="nav-label">Bölüm 1</span>
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+</nav>
+
+<main>
+
+  <p class="lede reveal">
+    Görmek, sözcüklerden önce gelir. Çocuk, konuşmayı öğrenmeden önce bakar ve tanır.
+  </p>
+
+  <p class="reveal">
+    Ama görmenin sözcüklerden önce gelmesi daha başka bir anlamda da doğrudur. Çevremizde var olan dünyaya kendi yerimizi görerek buluruz; dünyayı sözcüklerle açıklasak da sözcükler, onu çepeçevre kuşatmış olma olgusunu asla değiştiremez. Gördüğümüzle bildiğimiz arasındaki ilişki hiçbir zaman yerli yerine oturmaz. Her akşam güneşin battığını görürüz. Dünyanın güneşten uzaklaştığını biliriz. Gene de bu bilgi, bu açıklama, gördüğümüzle tam olarak örtüşmez. Sürrealist ressam Magritte, sözcükler ile görme arasındaki bu her zaman var olan uçurumu, <em>Düşlerin Anahtarı</em> adlı tablosunda işlemiştir.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_0.jpg" alt="Düşlerin Anahtarı, René Magritte" loading="lazy">
+    <figcaption>René Magritte, <em>Düşlerin Anahtarı</em>, 1898–1967, özel koleksiyon</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Nesneleri görme biçimimiz bildiklerimizden ya da inandıklarımızdan etkilenir. İnsanların Cehennem'in gerçekten var olduğuna inandıkları Ortaçağ'da ateşin bugünkünden çok değişik bir anlamı vardı kuşkusuz. Gene de onlardaki bu cehennem kavramı —yanıkların verdiği acıdan olduğu ölçüde— ateşi her şeyi yutan, kül eden birşey olarak görmelerinden doğmuştur.
+  </p>
+
+  <p class="reveal">
+    Seven birisi için sevgiliyi görmenin hiçbir sözcük ya da kucaklayışla karşılaştırılamayacak bir bütünlüğü vardır; bu bütünlük, geçici olarak, ancak sevişmeyle sağlanabilir.
+  </p>
+
+  <p class="reveal">
+    Gene de sözcüklerden önce gelen ve sözcüklerle tam olarak anlatılamayan görme, uyarıcılara karşı mekanik bir tepkide bulunup bulunmama sorunu değildir. Yalnızca baktığımız şeyleri görürüz. Bakmak bir seçme edimidir. Tek bir nesneye değil, nesnelerle aramızdaki ilişkilere bakarız her zaman. Görüşümüz sürekli olarak canlıdır, hareketlidir; her şeyi çevresindeki bir çember içinde tutar; bulunduğumuz durumda bizim için orada var olabilecek her şeyi gösterir bize.
+  </p>
+
+  <p class="reveal">
+    Görebildiğimizi anlar anlamaz, başkalarının da bizi görebileceğini fark ederiz. Ötekinin gözü, kendi gözümüzle birleşerek görünür dünyanın bir parçası olduğumuzu bize inandırır.
+  </p>
+
+  <p class="reveal">
+    Şu karşıdaki tepeyi görebiliyorsak, o tepeden de bizim görülebildiğimizi öne sürmüş oluruz. Görmenin bu karşılıklı niteliği, sözel diyaloğunkinden çok daha temeldir.
+  </p>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Bu kitapta kullandığımız anlamıyla bütün imgeler insan yapısıdır.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_1.jpg" alt="İmge ve görme" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    İmge, bir görünümün yeniden yaratılması ya da yeniden üretilmesidir. İmge; bir görünümdür ya da ilk ortaya çıktığı yer ve zamandan koparılarak birkaç dakika ya da birkaç yüzyıl için korunmuş bir dizi görünümdür. Her imge bir görme biçimini bünyesinde taşır. Fotoğraf bile. Çünkü fotoğraflar çoğu zaman sanıldığı gibi mekanik bir kayıt değildir. Her fotoğrafa baktığımızda, ne kadar az olursa olsun, fotoğrafçının o görüntüyü sayısız başka olası görüntüler içinden seçtiğini fark ederiz.
+  </p>
+
+  <p class="reveal">
+    İmgeler başlangıçta orada bulunmayan şeyleri gözde canlandırmak amacıyla yapılmıştır. Zamanla imgenin canlandırdığı şeyden daha kalıcı olduğu anlaşıldı. Böyle olunca imge bir nesnenin ya da kişinin bir zamanlar nasıl göründüğünü —böylece konunun eskiden başkalarınca nasıl görüldüğünü de— anlatıyordu. İmge Y'nin X'i nasıl gördüğünü kaydeden bir şey oldu.
+  </p>
+
+  <p class="reveal">
+    Geçmişten kalan hiçbir kutsal kalıntı ya da metin, o dönemlerde yaşayan insanların çevresindeki dünya hakkında imgeler kadar doğrudan tanıklık sunamaz. Bu açıdan imgeler, edebiyattan daha kesin ve daha zengindir.
+  </p>
+
+  <p class="reveal">
+    Yine de bir imge sanat yapıtı olarak sunulduğunda, insanların ona bakış biçimi, sanatla ilgili öğrenilmiş bir dizi varsayımdan etkilenir. Bunlar şöyle sıralanabilir:
+  </p>
+
+  <ul class="berger-list reveal">
+    <li>Güzellik</li>
+    <li>Gerçek</li>
+    <li>Deha</li>
+    <li>Uygarlık</li>
+    <li>Biçim</li>
+    <li>Statü</li>
+    <li>Zevk</li>
+    <li>vb.</li>
+  </ul>
+
+  <p class="reveal">
+    Bu varsayımların çoğu artık dünyayla bağdaşmamaktadır. Geçmiş hiçbir zaman olduğu yerde durup yeniden keşfedilmeyi beklemez. Tarih her zaman belli bir <em>şimdi</em>'yle onun geçmişi arasındaki ilişkiyi kurar. Şimdi'den korkmak geçmişi bulandırmaya yol açar.
+  </p>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Bu tür bulandırmanın tipik bir örneğini ele alalım. Frans Hals üzerine yakın zamanda iki ciltlik bir inceleme yayınlandı. Bu ressam hakkında bugüne kadar yapılmış en kapsamlı çalışma olan bu kitap, uzmanlaşmış sanat tarihi kitabı olarak ortalamanın ne üstünde ne de altındadır.
+  </p>
+
+  <figure class="reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_1.jpg" alt="Yaşlılar Yurdu Mütevellileri, Frans Hals" loading="lazy">
+    <figcaption>Frans Hals, <em>Yaşlılar Yurdu Mütevellileri</em>, 1580–1666, Frans Hals Müzesi, Haarlem</figcaption>
+  </figure>
+
+  <figure class="reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_2.jpg" alt="Yaşlılar Yurdu Mütevelli Kadınları, Frans Hals" loading="lazy">
+    <figcaption>Frans Hals, <em>Yaşlılar Yurdu Mütevelli Kadınları</em>, 1580–1666, Frans Hals Müzesi, Haarlem</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Frans Hals'ın son iki büyük tablosu, 17. yüzyıl Hollanda'sının Haarlem kentinde yaşlı yoksullar için kurulmuş bir yurdun yöneticilerini ve yönetici kadınlarını resmeder. Hals, seksen yaşından büyük bir ihtiyardır ve beş parasızdır. Hayatının büyük bölümünde borç içinde yaşamıştır. 1664 kışında —bu tabloları yapmaya başladığı yıl— donmamak için devletten üç yük turba almak zorunda kalmıştır. Şimdi önünde poz verenler, işte bu yardımı yönetenlerdir.
+  </p>
+
+  <p class="reveal">
+    Yazar bu gerçekleri aktarır ve ardından açıkça şunu söyler: tablolarda oturanların eleştirildiğini okumak yanlış olur. Hals'ın onları acı bir ruhla resmettiğine dair hiçbir kanıt yoktur. Yazar bununla birlikte bu tabloları olağanüstü sanat yapıtları olarak değerlendirir. Mütevelli kadınlar için şöyle yazar:
+  </p>
+
+  <blockquote class="reveal">
+    <p>Her kadın eşit bir önemle insanlık durumunu dile getirir. Her kadın, devasa karanlık zemine karşı eşit bir açıklıkla öne çıkar; oysa sağlam bir ritmik düzenlemeyle ve başları ile elleri tarafından oluşturulan hafif çapraz desenle birbirlerine bağlanmışlardır. Derin, parlak siyahların ince nüansları, bütünün uyumlu kaynaşmasına katkıda bulunur ve fırça vuruşlarının genişlik ile güç doruğuna ulaştığı güçlü beyazlar ve canlı beden tonlarıyla unutulmaz bir zıtlık oluşturur. <em>(vurgular bize ait)</em></p>
+  </blockquote>
+
+  <p class="reveal">
+    Bir tablonun bileşimsel birliği, imgesinin gücüne temel olarak katkıda bulunur. Tablonun bileşimini ele almak makul bir şeydir. Ama burada bileşim, sanki imgenin duygusal yükünün kendisiymiş gibi yazılmaktadır. <em>Uyumlu kaynaşma, unutulmaz zıtlık, genişlik ve güç doruğuna ulaşmak</em> gibi terimler, imgenin uyandırdığı duyguyu yaşanan deneyim düzleminden ilgisiz 'sanat takdiri' düzlemine taşır. Tüm çatışma ortadan kalkar. Geriye değişmez 'insanlık durumu' ve harika yapılmış bir nesne olarak ele alınan tablo kalır.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_2_crop_1.jpg" alt="Mütevelli kadınlar detay" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_2_crop_2.jpg" alt="Mütevelli kadınlar detay" loading="lazy">
+    <figcaption>Frans Hals, <em>Mütevelli Kadınlar</em> (detaylar)</figcaption>
+  </div>
+
+  <p class="reveal">
+    Sanat tarihçisi bu tür doğrudan yargıdan korkar:
+  </p>
+
+  <blockquote class="reveal">
+    <p>Hals'ın pek çok başka tablosunda olduğu gibi, nüfuz eden karakterizasyonlar bizi neredeyse resimlerdeki erkek ve kadınların kişilik özelliklerini ve alışkanlıklarını bildiğimize inandıracak kadar baştan çıkarıcıdır.</p>
+  </blockquote>
+
+  <p class="reveal">
+    Söz ettiği bu 'baştan çıkarma' nedir? Hals'ın tabloların üzerimizde yarattığı etkiden başka bir şey değildir. Bu etki bize Hals'ın modellerini görme biçimini kabul ettiğimiz için oluşur. Ve bunu masum bir kabul olarak yapmayız. Bunu, insanlar, jestler, yüzler, kurumlar hakkındaki kendi gözlemlerimizle örtüştüğü ölçüde kabul ederiz.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_1_crop_1.jpg" alt="Mütevelliler detay" loading="lazy">
+    <figcaption>Frans Hals, <em>Mütevelliler</em> (detay)</figcaption>
+  </figure>
+
+  <p class="pull reveal">
+    Bu çatışmada Mütevelliler ve Mütevelli Kadınlar, itibarını yitirmiş ve devlet yardımıyla geçinen beş parasız yaşlı bir ressamın gözleriyle ona bakmaktadır.
+  </p>
+
+  <p class="reveal">
+    Bulandırmanın kullanılan sözcük dağarcığıyla pek ilgisi yoktur. Bulandırma, aksi hâlde açık seçik görünebilecek bir şeyi açıklamak suretiyle gizleme sürecidir. Hals, kapitalizmin yarattığı yeni karakterleri ve ifadeleri tablo hâline getiren ilk portre ressamıydı. Balzac'ın iki yüzyıl sonra edebiyatta yaptığını resimde yaptı. Gene de bu tabloların yetkili çalışmasının yazarı sanatçının başarısını şöyle özetler: "Hals'ın kişisel vizyonuna sarsılmaz bağlılığı..." — İşte bu bulandırmadır.
+  </p>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Bugün geçmişin sanatını hiç kimsenin görmediği bir biçimde görüyoruz. Aslında bambaşka bir biçimde algılıyoruz.
+  </p>
+
+  <p class="reveal">
+    Bu değişiklik, perspektif geleneği denen şeyin aracılığıyla gösterilebilir. Yalnız Avrupa sanatına özgü olan ve Rönesans'ın başlarında yerleşen perspektif geleneğinde her şey bakan kişinin görüş açısına göre düzenlenir. Tıpkı deniz fenerinden çıkan ışınlara benzer; ama dışarı doğru çıkan ışınlar yerine burada görünen şeyler sanki içeri doğru ilerler. Bu geleneğin adı ortaya çıkan şeyleri gerçeklik olarak koydu. Perspektif, tek gözü görünür dünyanın merkezi yapar. Her şey, bir gözün üzerine, sonsuzluğun kaçış noktasına doğru yakınsar.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_21.jpg" alt="Perspektif şeması" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Fotoğraf makinesinin icadından sonra bu çelişki giderek belirginleşti.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_11.jpg" alt="Vertov - mekanik göz" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Bu alıntı, Sovyetler Birliği'nin devrimci sinema yönetmeni Dziga Vertov'un 1923'te yazdığı bir makaleden:
+  </p>
+
+  <blockquote class="reveal">
+    <p>Ben bir gözüm. Mekanik bir göz. Ben, makine, size dünyayı yalnızca benim görebileceğim biçimde gösteriyorum. Kendimi bugün ve sonsuza dek insan hareketsizliğinden kurtarıyorum. Sürekli hareket hâlindeyim. Nesnelere yaklaşır, onlardan uzaklaşırım. Altlarına girerim. Koşan bir atın ağzının yanında ilerlerim. Düşen ve kalkan bedenlerle birlikte düşer ve kalkarım. Bu benim, makinenin, en karmaşık bileşimler içinde bir hareketi diğerinin ardından kaydederek kaotik hareketler içinde manevra yapması. Zaman ve mekânın sınırlarından kurtularak, evrenin istediğim her noktasını, olmalarını istediğim yerlerde koordine ediyorum. Benim yolum, dünyaya yeni ve taze bir algı yaratmaya doğru gidiyor.</p>
+  </blockquote>
+
+  <p class="reveal">
+    Fotoğraf makinesi anlık görünümleri yalıttı ve bunu yaparken imgelerin zamansız olduğu düşüncesini yok etti. Ya da başka türlü söylemek gerekirse: fotoğraf makinesi, zamanın geçmesi kavramının görsel deneyimden ayrılamaz olduğunu gösterdi.
+  </p>
+
+  <p class="reveal">
+    Fotoğraf makinesinin icadı aynı zamanda çok daha önce yapılmış olan tabloları insanların görme biçimini de değiştirdi.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_3.jpg" alt="Hasır Sandalyeli Natürmort, Picasso" loading="lazy">
+    <figcaption>Pablo Picasso, <em>Hasır Sandalyeli Natürmort</em>, 1881</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Başlangıçta tablolar, yapıldıkları yapının ayrılmaz bir parçasıydı. Bazen erken bir Rönesans kilisesinde ya da şapelinde, duvarlardaki imgelerin yapının iç yaşamının kayıtları olduğu, birlikte yapının belleğini oluşturdukları duygusu uyandırılır — o kadar çok yapının kendine özgü niteliğinin bir parçasıdırlar.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_12.jpg" alt="Kilise freski" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_13.jpg" alt="Kilise freskleri" loading="lazy">
+  </div>
+
+  <p class="reveal">
+    Her tablonun özgünlüğü, bir zamanlar bulunduğu yerin özgünlüğünün bir parçasıydı. Fotoğraf makinesi bir tabloyu yeniden ürettiğinde, imgesinin özgünlüğünü yok eder. Bunun sonucu olarak anlamı değişir. Daha doğrusu anlamı çoğalır ve pek çok anlama parçalanır.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_14.jpg" alt="Televizyonda sanat" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Bir tablo televizyon ekranında gösterildiğinde olup bitenler bu durumu çarpıcı biçimde örnekler. Tablo her izleyicinin evine girer. Orada duvar kâğıdıyla, mobilyasıyla, hatıra eşyasıyla çevrilir. Aile atmosferine katılır. Onların konuşma konusu olur. Kendi anlamını onların anlamına katar. Aynı zamanda bir milyon başka eve girer ve bunların her birinde farklı bir bağlamda görülür.
+  </p>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Leonardo da Vinci'nin <em>Kayalar Bakiresi</em>'nin bir yeniden üretimini ele alalım.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_4.jpg" alt="Kayalar Bakiresi - National Gallery" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_5.jpg" alt="Kayalar Bakiresi - Louvre" loading="lazy">
+    <figcaption>Leonardo da Vinci, <em>Kayalar Bakiresi</em> — solda: National Gallery, Londra; sağda: Louvre, Paris</figcaption>
+  </div>
+
+  <p class="reveal">
+    Bu yeniden üretimi gördükten sonra, yeniden üretimin neyden yoksun olduğunu keşfetmek için National Gallery'ye gidip özgün tabloya bakılabilir. Ya da yeniden üretimin kalitesini bir kenara bırakıp özgünü gördüğünde yalnızca, bir yerden yeniden üretimini daha önce gördüğün ünlü bir tablo olduğunu hatırlayabilirsin. Her iki durumda da özgünün benzersizliği artık onun bir yeniden üretimin özgünü olmasında yatar. Artık imgenin ne gösterdiği onu özgün kılan şey değildir; ilk anlamı artık ne söylediğinde değil ne olduğunda bulunur.
+  </p>
+
+  <p class="reveal">
+    Özgün yapıtın bu yeni statüsü, yeniden üretimin yeni araçlarının tam anlamıyla mantıksal sonucudur. Ama işte tam bu noktada yeniden bir bulandırma süreci devreye girer. Özgün yapıtın anlamı artık benzersiz olarak söylediği şeyde değil, benzersiz olarak ne olduğunda yatar. Peki bu benzersiz varoluş nasıl değerlendirilir? Değeri, nadir oluşuna bağlı bir nesne olarak tanımlanır. Bu değer piyasadaki fiyatıyla onaylanır ve ölçülür.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_15.jpg" alt="Aziz Anne ile Bakire ve Çocuk Kartonu" loading="lazy">
+    <figcaption>Leonardo da Vinci, <em>Aziz Anne, Bakire ve Çocuk ile Vaftizci Yahya</em>, National Gallery, Londra</figcaption>
+  </figure>
+
+  <p class="reveal">
+    National Gallery, Leonardo'nun bu karikatürünün diğer tablolardan daha fazla yeniden üretimini satar. Birkaç yıl önce yalnızca uzmanlar tarafından biliniyordu. Bir Amerikalının onu iki buçuk milyon sterline satın almak istemesi üzerine ünlendi. Şimdi tek başına bir odada asılıdır. Oda bir şapele benzer. Çizim kurşun geçirmez camın arkasındadır. Yeni bir etkileyicilik kazanmıştır. Ne gösterdiği için değil — imgesinin anlamı için değil. Piyasa değeri nedeniyle etkileyici, gizemli bir hâl almıştır.
+  </p>
+
+  <p class="pull reveal">
+    Özgün sanat yapıtlarını bugün çevreleyen sahte dinsellik, en sonunda piyasa değerlerine bağlı olup oligarşik, demokratik olmayan bir kültürün süren değerleri adına yapılan son boş savunmadan ibarettir.
+  </p>
+
+  <p class="reveal">
+    Nüfusun büyük çoğunluğu sanat müzelerini ziyaret etmez. Aşağıdaki tablo sanatla ilgilenmenin ayrıcalıklı eğitimle ne denli ilişkili olduğunu göstermektedir.
+  </p>
+
+  <div class="data-figure reveal">
+    <img src="https://www.ways-of-seeing.com/images/chart_1.jpg" alt="Sanat müzesi ziyaretleri ve eğitim düzeyi" loading="lazy">
+    <figcaption style="text-align:center; margin-top:10px; font-family:'DM Sans'; font-size:11px; color:var(--muted);">Sanat müzesi ziyaretleri ile eğitim düzeyi arasındaki ilişki</figcaption>
+  </div>
+
+  <p class="reveal">
+    Büyük çoğunluk, müzelerin kendilerini dışlayan bir gizemin —hesaplanamaz zenginliğin gizeminin— kutsal kalıntılarıyla dolu olduğunu peşinen kabul eder. Bir başka tablo her toplumsal sınıfın bir sanat galerisi kavramından ne anladığını göstermektedir.
+  </p>
+
+  <div class="data-figure reveal">
+    <img src="https://www.ways-of-seeing.com/images/chart_2.jpg" alt="Sanat galerisine ilişkin toplumsal sınıf algısı" loading="lazy">
+    <figcaption style="text-align:center; margin-top:10px; font-family:'DM Sans'; font-size:11px; color:var(--muted);">Her toplumsal sınıfın bir sanat galerisi kavramından ne anladığına ilişkin tablo</figcaption>
+  </div>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Resimsel yeniden üretim çağında tabloların anlamı artık onlara bağlı değildir; anlamları aktarılabilir hâle gelir: yani bir çeşit bilgi olur ve tüm bilgiler gibi ya kullanılır ya da yok sayılır; bilgi kendi içinde özel bir otorite taşımaz.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_6.jpg" alt="Venüs ve Mars, Botticelli" loading="lazy">
+    <figcaption>Sandro Botticelli, <em>Venüs ve Mars</em>, 1445–1510, National Gallery, Londra</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Yeniden üretim bir tablonun ayrıntısını bütünden koparır. Ayrıntı dönüşüme uğrar. Alegorik bir figür bir kız portresi hâline gelir.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_6_crop_1.jpg" alt="Botticelli detay" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Bir film kamerası bir tabloyu yeniden ürettiğinde kaçınılmaz olarak film yönetmeninin argümanı için malzeme hâline gelir. Tabloların görüntülerini yeniden üreten bir film, seyirciyi tablo aracılığıyla yönetmenin kendi sonuçlarına doğru götürür. Tablo yönetmene otorite ödünç verir.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_7_crop_1.jpg" alt="Calvary'ye Yürüyüş detay" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_7_crop_2.jpg" alt="Calvary'ye Yürüyüş detay" loading="lazy">
+  </div>
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_7_crop_3.jpg" alt="Calvary'ye Yürüyüş detay" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_7_crop_4.jpg" alt="Calvary'ye Yürüyüş detay" loading="lazy">
+  </div>
+
+  <p class="reveal">
+    Bunun nedeni bir filmin zaman içinde açılması, tablonun ise açılmamasıdır. Filmde bir imgenin diğerini izleyişi, ardışıklıkları, geri dönülemez olan bir argüman kurar. Bir tabloda tüm öğeler aynı anda görülmek üzere oradadır.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_7.jpg" alt="Calvary'ye Yürüyüş, Pieter Bruegel" loading="lazy">
+    <figcaption>Pieter Bruegel (Yaşlı), <em>Golgota'ya Yürüyüş</em>, 1525–69, Kunsthistorisches Museum, Viyana</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Tablolar çoğu zaman etraflarında sözcüklerle yeniden üretilir. Bu buğday tarlasından uçuşan kuşların bulunduğu bir manzaradır. Bir an bakın. Sonra sayfayı çevirin.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_8.jpg" alt="Kargalı Buğday Tarlası, Van Gogh" loading="lazy">
+    <figcaption>Vincent van Gogh, <em>Kargalı Buğday Tarlası</em>, 1853–90, Stedelijk Museum, Amsterdam</figcaption>
+  </figure>
+
+  <br><br><br>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_8.jpg" alt="Kargalı Buğday Tarlası - Van Gogh öldüğünde son tablosu" loading="lazy">
+  </figure>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_7.jpg" alt="Van Gogh son tablosu" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Sözcüklerin imgeyi tam olarak nasıl değiştirdiğini tanımlamak güçtür, ama kuşkusuz değiştirmiştir. İmge şimdi cümleyi örneklemektedir.
+  </p>
+
+  <p class="reveal">
+    Bu denemede yeniden üretilen her imge, tablonun özgün bağımsız anlamıyla pek az ya da hiç ilgisi olmayan bir argümanın parçası hâline gelmiştir. Sözcükler kendi sözel otoritelerini pekiştirmek için tabloları alıntılamıştır.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_2.jpg" alt="İmgeler ve bağlam" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_3.jpg" alt="İmgeler ve bağlam" loading="lazy">
+  </div>
+
+  <p class="reveal">
+    Bunun sonucu olarak, yeniden üretim, özgününün imgesine kendi göndermelerini yapmanın yanı sıra başka imgeler için kendisi de bir gönderme noktası hâline gelir. Bir imgenin anlamı, yanında ya da hemen ardından görülene bağlı olarak değişir.
+  </p>
+
+  <div class="img-grid cols-2 reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_4.jpg" alt="İmge bağlamları" loading="lazy">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_5.jpg" alt="İmge bağlamları" loading="lazy">
+  </div>
+
+  <p class="reveal">
+    Sanat yapıtları yeniden üretilebildiği için kuramsal olarak herkes tarafından kullanılabilir. Yine de çoğunlukla —sanat kitaplarında, dergilerde, filmlerde ya da salonlardaki yaldızlı çerçeveler içinde— yeniden üretimler, hiçbir şeyin değişmediği yanılsamasını güçlendirmek için kullanılır: Sanatın özgün, azalmamış otoritesiyle diğer tüm otorite biçimlerini meşrulaştırdığı, sanatın eşitsizliği asil ve hiyerarşileri heyecan verici gösterdiği yanılsamasını.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_og_6.jpg" alt="Kişisel pano ve imgeler" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Yetişkinler ve çocuklar zaman zaman yatak odalarında ya da salonlarında kâğıt parçaları astıkları panolar bulundururlar: mektuplar, fotoğraflar, tablo yeniden üretimleri, gazete kesimleri, özgün çizimler, kartpostallar. Her panoda tüm imgeler aynı dile ait ve hepsi az ya da çok eşittir, çünkü yüksek derecede kişisel bir biçimde seçilerek odanın sahibinin deneyimiyle eşleştirilmiştir ve onu ifade etmektedir. Mantıksal olarak bu panolar müzelerin yerini almalıdır.
+  </p>
+
+  <div class="section-break reveal"><span>✦</span></div>
+
+  <p class="reveal">
+    Bununla ne demek istiyoruz? Ne demediğimizi önce netleştirelim.
+  </p>
+
+  <p class="reveal">
+    Özgün sanat yapıtları karşısında, yalnızca ayakta kalmış olmalarına duyulan hayranlık dışında deneyimlenecek hiçbir şey kalmadığını söylemiyoruz. Geçmişin sanat yapıtlarının genellikle yaklaşıldığı yol —müze katalogları, rehberler, kiralık kasetler vb. aracılığıyla— onlara yaklaşılabilecek tek yol değildir.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_10.jpg" alt="Sütçü Kadın, Vermeer" loading="lazy">
+    <figcaption>Jan Vermeer, <em>Sütçü Kadın</em>, 1632–75, Rijksmuseum, Amsterdam</figcaption>
+  </figure>
+
+  <p class="reveal">
+    Özgün tablolar, bilginin hiçbir zaman olmadığı anlamda sessiz ve hareketsizdir. Özgününde sessizlik ve hareketsizlik, ressamın anlık jestlerinin izlerinin takip edildiği gerçek malzemeye, boyaya işlemiştir. Bunun tablonun boyanması ile kişinin ona bakması arasındaki zamansal mesafeyi kapatma etkisi vardır. Bu özel anlamda tüm tablolar çağdaştır.
+  </p>
+
+  <p class="pull reveal">
+    Geçmişin sanatı artık bir zamanlar olduğu gibi var değildir. Onun otoritesi yitirildi. Onun yerine imgeler dili geçti. Şimdi önemli olan bu dili kimin ve ne için kullandığıdır.
+  </p>
+
+  <p class="reveal">
+    Yeniden üretim araçları uygulamada bu araçların varlığının olanaklı kıldığını gizlemek ya da yadsımak için siyasi ve ticari amaçlarla kullanılır. Ama zaman zaman bireyler onları farklı biçimlerde kullanır.
+  </p>
+
+  <p class="reveal">
+    Yeni imgeler dili farklı biçimde kullanılsaydı, kullanımı aracılığıyla yeni bir tür güç kazandırırdı. Bu dil içinde deneyimlerimizi sözcüklerin yetersiz kaldığı alanlarda daha kesin olarak tanımlamaya başlayabilirdik. Yalnızca kişisel deneyimi değil, aynı zamanda geçmişle olan ilişkimizin de temel tarihsel deneyimini de: yani yaşamımıza anlam vermeye çalışma, içinde etkin etkenler olabileceğimiz tarihi anlama deneyimini.
+  </p>
+
+  <p class="reveal">
+    Bir halk ya da sınıf kendi geçmişinden koparıldığında, tarih içinde kendini konumlandırabilmiş bir halk ya da sınıfa kıyasla, seçim yapmakta ve halk ya da sınıf olarak eylemde bulunmakta çok daha az özgürdür. Bu nedenle —ve yalnızca bu nedenle— geçmişin tüm sanatı artık siyasi bir mesele hâline gelmiştir.
+  </p>
+
+  <figure class="inline reveal">
+    <img src="https://www.ways-of-seeing.com/images/ch1_20.jpg" alt="Walter Benjamin" loading="lazy">
+  </figure>
+
+  <p class="reveal">
+    Bu denemede yer alan fikirlerin bir bölümü, kırk yılı aşkın bir süre önce yazılmış başka bir denemeden alınmıştır. Alman eleştirmen ve düşünür Walter Benjamin'in bu denemesi <em>Mekanik Yeniden Üretilebilirlik Çağında Sanat Eseri</em> başlığını taşımaktadır.
+  </p>
+
+  <div class="footnote reveal">
+    <p>John Berger, <em>Görme Biçimleri</em>, çev. Yurdanur Salman, Metis Yayınları, İstanbul. — Bu sayfa eğitim amacıyla hazırlanmıştır.</p>
+  </div>
+
+</main>
+
+<script>
+  // Progress bar
+  const fill = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop || document.body.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    fill.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
